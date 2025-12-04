@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
             \App\Http\Middleware\AdminRedirectMiddleware::class,
+            \App\Http\Middleware\ForceHttps::class,
         ]);
 
         // Agregar middleware de sesión a las rutas API de admin

@@ -22,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         
+        // Forzar HTTPS en producción
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+        
         // Registrar comandos de consola
         if ($this->app->runningInConsole()) {
             $this->commands([
