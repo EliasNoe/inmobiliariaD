@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-cli
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
     nodejs \
-    npm
+    npm \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
@@ -31,14 +32,19 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Install npm dependencies and build
 RUN npm install && npm run build
 
-# Optimize Laravel
-RUN php artisan optimize && \
-    php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache
+# Create storage link (before cache)
+RUN php artisan storage:link || true
+
+# Set permissions
+RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache
 
 # Expose port
 EXPOSE 8080
 
-# Start command
-CMD php artisan storage:link && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080
+# Start command - migrations run at startup
+CMD php artisan config:clear && \
+    php artisan migrate --force && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
+    php artisan serve --host=0.0.0.0 --port=8080
