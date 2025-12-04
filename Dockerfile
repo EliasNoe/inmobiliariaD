@@ -61,12 +61,15 @@ fi\n\
 \n\
 echo "Database connected!"\n\
 \n\
-# Clear caches\n\
+# Clear config only (safe before migrations)\n\
 php artisan config:clear\n\
-php artisan cache:clear\n\
 \n\
-# Run migrations\n\
+# Run migrations first\n\
+echo "Running migrations..."\n\
 php artisan migrate --force\n\
+\n\
+# Now safe to clear cache\n\
+php artisan cache:clear || true\n\
 \n\
 # Optimize\n\
 php artisan config:cache\n\
