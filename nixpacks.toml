@@ -1,9 +1,8 @@
-# Nixpacks configuration for Railway
 [phases.setup]
-nixPkgs = ["...", "php83Extensions.gd"]
+nixPkgs = ["php83", "php83Extensions.gd", "php83Extensions.pdo_mysql", "php83Extensions.mbstring", "php83Extensions.bcmath", "php83Extensions.zip", "nodejs", "npm"]
 
 [phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gd"]
+cmds = ["composer install --no-dev --optimize-autoloader --no-interaction"]
 
 [phases.build]
 cmds = [
