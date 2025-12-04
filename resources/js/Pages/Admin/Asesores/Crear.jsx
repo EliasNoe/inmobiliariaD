@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
-import InputError from '@/components/common/InputError';
-import InputLabel from '@/components/common/InputLabel';
-import TextInput from '@/components/common/TextInput';
-import SelectInput from '@/components/common/SelectInput';
-import TextareaInput from '@/components/common/TextareaInput';
+import InputError from '@/Components/common/InputError';
+import InputLabel from '@/Components/common/InputLabel';
+import TextInput from '@/Components/common/TextInput';
+import SelectInput from '@/Components/common/SelectInput';
+import TextareaInput from '@/Components/common/TextareaInput';
 
 export default function CrearAsesor({ auth }) {
     // Opciones para los selectores
